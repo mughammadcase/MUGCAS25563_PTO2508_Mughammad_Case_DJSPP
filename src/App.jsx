@@ -23,8 +23,6 @@ export default function App() {
     <>
       <div className={theme}>
         <Header />
-        {/* Temporary placeholder */}
-        <button onClick={toggleTheme}>Toggle</button>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path={`/show/:id`} element={<ShowDetail />} />
