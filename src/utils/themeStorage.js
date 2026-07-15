@@ -9,5 +9,5 @@ export function getStoredTheme() {
 }
 
 export function saveTheme(theme) {
-  localStorage.getItem("theme", theme);
+  localStorage.setItem("theme", theme);
 }

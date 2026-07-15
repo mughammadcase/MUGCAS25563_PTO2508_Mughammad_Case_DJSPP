@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/UI/Header";
 import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
-import { PodcastProvider } from "./context/PodcastContext";
+import { useTheme } from "./context/ThemeContext";
 
 /**
  * Root component of the Podcast Explorer app.
@@ -16,15 +16,20 @@ import { PodcastProvider } from "./context/PodcastContext";
  * @returns {JSX.Element} The application component with routing and context.
  */
 export default function App() {
+  const { theme, toggleTheme } = useTheme();
+  console.log(theme);
+
   return (
     <>
-      <Header />
-      <PodcastProvider>
+      <div className={theme}>
+        <Header />
+        {/* Temporary placeholder */}
+        <button onClick={toggleTheme}>Toggle</button>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path={`/show/:id`} element={<ShowDetail />} />
         </Routes>
-      </PodcastProvider>
+      </div>
     </>
   );
 }
