@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <>
-      <div className={theme}>
+      <div className={`app ${theme}`}>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

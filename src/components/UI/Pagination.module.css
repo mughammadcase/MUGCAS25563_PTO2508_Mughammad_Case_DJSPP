@@ -6,14 +6,25 @@
   padding: 1rem 0;
 }
 .pageButton {
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+
   padding: 0.5rem 0.75rem;
   border-radius: 999px;
-  background-color: #eee;
-  font-size: 1rem;
-  border: none;
+  border: 1px solid var(--border-color);
+
   cursor: pointer;
+
+  transition: all 0.25s ease;
 }
+
+.pageButton:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
 .active {
-  background-color: #2563eb;
+  background-color: var(--accent-color);
   color: white;
 }

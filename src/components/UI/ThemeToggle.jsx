@@ -17,7 +17,14 @@ export default function ThemeToggle() {
 
   return (
     <div className={styles.themeToggleContainer}>
-      <img src={lightIcon} alt="Light mode" className={styles.themeIcon} />
+      {/* Light and dark mode as active icons, toggle button also changes colour and position basedon current theme */}
+      <img
+        src={lightIcon}
+        alt="Light mode"
+        className={`${styles.themeIcon} ${
+          theme === "light" ? styles.selected : ""
+        }`}
+      />
 
       <button
         className={`${styles.themeToggle} ${
@@ -29,7 +36,13 @@ export default function ThemeToggle() {
         <span className={styles.toggleCircle}></span>
       </button>
 
-      <img src={darkIcon} alt="Dark mode" className={styles.themeIcon} />
+      <img
+        src={darkIcon}
+        alt="Dark mode"
+        className={`${styles.themeIcon} ${
+          theme === "dark" ? styles.selected : ""
+        }`}
+      />
     </div>
   );
 }
