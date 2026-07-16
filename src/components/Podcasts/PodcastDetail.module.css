@@ -36,8 +36,9 @@ strong {
 }
 
 .cover {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -189,33 +190,68 @@ strong {
   font-size: 0.875rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
+
   .header {
-    flex-direction: column;
-    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
   }
+
+  .header > div {
+    flex: 1;
+  }
+
   .cover {
-    width: 100%;
+    width: 220px;
+    min-width: 220px;
+    height: 220px;
   }
+
   .title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
   }
+
   .description {
     font-size: 0.9rem;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
   .seasonIntro {
     flex-direction: column;
+  }
+
+  .seasonDetails {
+    padding: 1rem;
   }
 
   .episodeCover {
     display: none;
   }
 
-  .seasonDetails {
-    padding: 1rem;
+  .episodeCard {
+    padding: 0.75rem;
+  }
+
+  .episodeTitle {
+    font-size: 0.9rem;
+  }
+
+  .episodeInfo {
+    margin-left: 0;
   }
 
   .left {
@@ -223,14 +259,44 @@ strong {
     /* flex-direction: column; */
     width: 100%;
   }
+
   .dropdown {
     order: 0;
     width: 100%;
   }
+
   .episodeDesc {
     display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
+
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 500px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .header > div {
+    width: 100%;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .cover {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 1rem;
   }
 }
