@@ -12,6 +12,12 @@ export function AudioProvider({ children }) {
   const [currentEpisode, setCurrentEpisode] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Duration of current episode playing
+  const [currentTime, setCurrentTime] = useState(0);
+
+  // Episode length
+  const [duration, setDuration] = useState(0);
+
   /**
    * Sets the selected episode and starts playback
    *
@@ -39,9 +45,15 @@ export function AudioProvider({ children }) {
       value={{
         currentEpisode,
         isPlaying,
+        currentTime,
+        duration,
+
         playEpisode,
         pauseAudio,
         resumeAudio,
+        seekAudio,
+        setCurrentTime,
+        setDuration,
       }}
     >
       {children}

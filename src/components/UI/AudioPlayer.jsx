@@ -1,5 +1,5 @@
 // useRef accesses DOM nodes, bypass React virtual DOM
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useAudio } from "../../context/AudioContext";
 import styles from "./AudioPlayer.module.css";
@@ -12,22 +12,82 @@ export default function AudioPlayer() {
     isPlaying,
     currentTime,
     duration,
+    setCurrentTime,
+    setDuration,
     pauseAudio,
     resumeAudio,
-    seekAudio,
   } = useAudio();
 
+  /**
+   * Loads a newly selected episode
+   * Only runs when the selected episode changes
+   */
   useEffect(() => {
     if (!audioRef.current || !currentEpisode) return;
 
-    audioRef.current.src = currentEpisode.file;
+    const audio = audioRef.current;
+
+    audio.pause();
+    audio.src = currentEpisode.file;
+    audio.load();
+
+    setCurrentTime(0);
+    setDuration(0);
+
+    audio.currentTime = 0;
 
     if (isPlaying) {
-      audioRef.current.play();
+      audio.play().catch(console.error);
     }
   }, [currentEpisode]);
 
-  // Ensures that player doesnt show until episode is selected
+  /**
+   * Handles play and pause state changes
+   */
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    if (isPlaying) {
+      audio.play().catch(console.error);
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying]);
+
+  /**
+   * Sets up audio listener once
+   */
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const handleEnded = () => {
+      pauseAudio();
+    };
+
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [pauseAudio, setCurrentTime, setDuration]);
+
+  // Hide audio player until an episode is selected
   if (!currentEpisode) return null;
 
   return (
@@ -40,13 +100,9 @@ export default function AudioPlayer() {
 
       <button
         onClick={() => {
-          if (!audioRef.current) return;
-
           if (isPlaying) {
-            audioRef.current.pause();
             pauseAudio();
           } else {
-            audioRef.current.play();
             resumeAudio();
           }
         }}
@@ -56,10 +112,19 @@ export default function AudioPlayer() {
 
       <input
         type="range"
-        min="0"
+        min={0}
         max={duration || 0}
+        step={0.1}
         value={currentTime}
-        onChange={(e) => seekAudio(Number(e.target.value))}
+        onChange={(e) => {
+          const time = Number(e.target.value);
+
+          if (audioRef.current) {
+            audioRef.current.currentTime = time;
+          }
+
+          setCurrentTime(time);
+        }}
       />
     </div>
   );
