@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 
 import { formatTime } from "../../utils/formatTime";
 import { useAudio } from "../../context/AudioContext";
+import playIcon from "../../assets/play-button.svg";
+import pauseIcon from "../../assets/pause-button.svg";
 import styles from "./AudioPlayer.module.css";
 
 export default function AudioPlayer() {
@@ -137,8 +139,9 @@ export default function AudioPlayer() {
                   resumeAudio();
                 }
               }}
+              aria-label={isPlaying ? "Pause audio" : "Play audio"}
             >
-              {isPlaying ? "❚❚" : "▶"}
+              <img src={isPlaying ? pauseIcon : playIcon} alt="" />
             </button>
 
             <button>⏭</button>
