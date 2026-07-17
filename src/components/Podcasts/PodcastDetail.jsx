@@ -86,27 +86,36 @@ export default function PodcastDetail({ podcast, genres }) {
         </div>
 
         <div className={styles.episodeList}>
-          {season.episodes.map((ep, index) => (
-            <div
-              key={index}
-              className={styles.episodeCard}
-              onClick={() =>
-                playEpisode({
-                  title: ep.title,
-                  season: selectedSeasonIndex + 1,
-                  showTitle: podcast.title,
-                })
-              }
-            >
-              <img className={styles.episodeCover} src={season.image} alt="" />
-              <div className={styles.episodeInfo}>
-                <p className={styles.episodeTitle}>
-                  Episode {index + 1}: {ep.title}
-                </p>
-                <p className={styles.episodeDesc}>{ep.description}</p>
-              </div>
-            </div>
-          ))}
+          {season.episodes.map(
+            (ep, index) => (
+              console.log(ep),
+              (
+                <div
+                  key={index}
+                  className={styles.episodeCard}
+                  onClick={() =>
+                    playEpisode({
+                      title: ep.title,
+                      season: selectedSeasonIndex + 1,
+                      showTitle: podcast.title,
+                    })
+                  }
+                >
+                  <img
+                    className={styles.episodeCover}
+                    src={season.image}
+                    alt=""
+                  />
+                  <div className={styles.episodeInfo}>
+                    <p className={styles.episodeTitle}>
+                      Episode {index + 1}: {ep.title}
+                    </p>
+                    <p className={styles.episodeDesc}>{ep.description}</p>
+                  </div>
+                </div>
+              )
+            ),
+          )}
         </div>
       </div>
     </div>
