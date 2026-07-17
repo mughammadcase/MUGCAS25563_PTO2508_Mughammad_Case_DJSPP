@@ -3,6 +3,7 @@ import Header from "./components/UI/Header";
 import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
 import { useTheme } from "./context/ThemeContext";
+import AudioPlayer from "./components/UI/AudioPlayer";
 
 /**
  * Root component of the Podcast Explorer app.
@@ -12,8 +13,10 @@ import { useTheme } from "./context/ThemeContext";
  * - Defines client-side routes using React Router:
  *    - "/" renders the `Home` page
  *    - "/show/:id" renders the `ShowDetail` page for a specific podcast
+ * - Renders global AudioPlayer outside the routing tree
+ *   so it remains mounted while navigating pages
  *
- * @returns {JSX.Element} The application component with routing and context.
+ * @returns {JSX.Element} The root application layout
  */
 export default function App() {
   const { theme, toggleTheme } = useTheme();
@@ -26,6 +29,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path={`/show/:id`} element={<ShowDetail />} />
         </Routes>
+
+        <AudioPlayer />
       </div>
     </>
   );
