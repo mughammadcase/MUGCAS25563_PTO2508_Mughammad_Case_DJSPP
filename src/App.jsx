@@ -17,7 +17,6 @@ import { useTheme } from "./context/ThemeContext";
  */
 export default function App() {
   const { theme, toggleTheme } = useTheme();
-  console.log(theme);
 
   return (
     <>
