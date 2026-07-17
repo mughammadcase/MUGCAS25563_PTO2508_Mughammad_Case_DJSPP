@@ -3,7 +3,7 @@ import Header from "./components/UI/Header";
 import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
 import { useTheme } from "./context/ThemeContext";
-import AudioPlayer from "./components/UI/AudioPlayer";
+import { AudioPlayer } from "./components";
 
 /**
  * Root component of the Podcast Explorer app.
@@ -19,7 +19,7 @@ import AudioPlayer from "./components/UI/AudioPlayer";
  * @returns {JSX.Element} The root application layout
  */
 export default function App() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <>

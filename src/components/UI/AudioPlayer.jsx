@@ -22,12 +22,16 @@ export default function AudioPlayer() {
 
   return (
     <div className={styles.player}>
-      // ref to to call browser methods from HTMLAudioElement
       <audio ref={audioRef} />
-      <h4>{currentEpisode.title}</h4>
-      <button onClick={isPlaying ? pauseAudio : resumeAudio}>
+
+      <div className={styles.info}>
+        <h4>{currentEpisode.title}</h4>
+      </div>
+
+      <button onClick={() => (isPlaying ? pauseAudio() : resumeAudio())}>
         {isPlaying ? "Pause" : "Play"}
       </button>
+
       <input
         type="range"
         min="0"
