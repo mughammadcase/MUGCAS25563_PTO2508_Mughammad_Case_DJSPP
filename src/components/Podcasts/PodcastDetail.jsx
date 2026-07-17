@@ -97,6 +97,7 @@ export default function PodcastDetail({ podcast, genres }) {
                   file: ep.file,
                   season: selectedSeasonIndex + 1,
                   showTitle: podcast.title,
+                  image: season.image,
                 })
               }
             >

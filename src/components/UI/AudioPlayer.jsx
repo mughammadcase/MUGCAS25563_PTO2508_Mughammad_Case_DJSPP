@@ -1,6 +1,7 @@
 // useRef accesses DOM nodes, bypass React virtual DOM
 import { useEffect, useRef } from "react";
 
+import { formatTime } from "../../utils/formatTime";
 import { useAudio } from "../../context/AudioContext";
 import styles from "./AudioPlayer.module.css";
 
@@ -114,38 +115,59 @@ export default function AudioPlayer() {
     <div className={styles.player}>
       <audio ref={audioRef} />
 
-      <div className={styles.info}>
-        <h4>{currentEpisode.title}</h4>
+      <div className={styles.cover}>
+        <img src={currentEpisode.image} alt={currentEpisode.showTitle} />
       </div>
 
-      <button
-        onClick={() => {
-          if (isPlaying) {
-            pauseAudio();
-          } else {
-            resumeAudio();
-          }
-        }}
-      >
-        {isPlaying ? "Pause" : "Play"}
-      </button>
+      <div className={styles.content}>
+        <div className={styles.topRow}>
+          <div className={styles.details}>
+            <h4>{currentEpisode.title}</h4>
+            <p>{currentEpisode.showTitle}</p>
+          </div>
 
-      <input
-        type="range"
-        min={0}
-        max={duration || 0}
-        step={0.1}
-        value={currentTime}
-        onChange={(e) => {
-          const time = Number(e.target.value);
+          <div className={styles.controls}>
+            <button>⏮</button>
 
-          if (audioRef.current) {
-            audioRef.current.currentTime = time;
-          }
+            <button
+              onClick={() => {
+                if (isPlaying) {
+                  pauseAudio();
+                } else {
+                  resumeAudio();
+                }
+              }}
+            >
+              {isPlaying ? "❚❚" : "▶"}
+            </button>
 
-          setCurrentTime(time);
-        }}
-      />
+            <button>⏭</button>
+          </div>
+        </div>
+
+        <div className={styles.progress}>
+          <span>{formatTime(currentTime)}</span>
+
+          <input
+            type="range"
+            min={0}
+            max={duration || 0}
+            step={0.1}
+            value={currentTime}
+            onChange={(e) => {
+              const time = Number(e.target.value);
+
+              if (audioRef.current) {
+                audioRef.current.currentTime = time;
+              }
+
+              setCurrentTime(time);
+            }}
+          />
+
+          <span>{formatTime(duration)}</span>
+        </div>
+      </div>
     </div>
   );
 }
