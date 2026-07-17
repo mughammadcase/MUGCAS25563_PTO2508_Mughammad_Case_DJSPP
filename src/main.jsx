@@ -5,13 +5,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { PodcastProvider } from "./context/PodcastContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import { AudioProvider } from "./context/AudioContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <PodcastProvider>
         <ThemeProvider>
-          <App />
+          <AudioProvider>
+            <App />
+          </AudioProvider>
         </ThemeProvider>
       </PodcastProvider>
     </BrowserRouter>

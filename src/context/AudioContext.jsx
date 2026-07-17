@@ -8,26 +8,31 @@ const AudioContext = createContext();
  * @returns
  */
 export function AudioProvider({ children }) {
-  // Stores which epidose is loaded
   const [currentEpisode, setCurrentEpisode] = useState(null);
-
-  // Audio playing or not (boolean)
   const [isPlaying, setIsPlaying] = useState(false);
-
-  // Stores the listening progress
   const [currentTime, setCurrentTime] = useState(0);
-
-  // length of the episode
   const [duration, setDuration] = useState(0);
 
-  // empty functions for actions
-  const playEpisode = (episode) => {};
+  // playEpisode seperate from audio, as it needs more data like title, season, show etc. keeps responsibilties clear
+  const playEpisode = (episode) => {
+    setCurrentEpisode(episode);
+    setIsPlaying(true);
+    setCurrentTime(0);
+  };
 
-  const pauseAudio = () => {};
+  const pauseAudio = () => {
+    setIsPlaying(false);
+  };
 
-  const resumeAudio = () => {};
+  const resumeAudio = () => {
+    if (currentEpisode) {
+      setIsPlaying(true);
+    }
+  };
 
-  const seekAudio = (time) => {};
+  const seekAudio = (time) => {
+    setCurrentTime(time);
+  };
 
   return (
     <AudioContext.Provider
