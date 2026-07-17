@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 const AudioContext = createContext();
 
 /**
+ * Provides global audio state to the application.
  *
  * @param {*} param0
  * @returns
@@ -10,24 +11,23 @@ const AudioContext = createContext();
 export function AudioProvider({ children }) {
   const [currentEpisode, setCurrentEpisode] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
 
-  // playEpisode seperate from audio, as it needs more data like title, season, show etc. keeps responsibilties clear
-  const playEpisode = (episode) => {
+  /**
+   * Sets the selected episode and starts playback
+   *
+   * @param {*} episode
+   */
+  function playEpisode(episode) {
     setCurrentEpisode(episode);
     setIsPlaying(true);
-    setCurrentTime(0);
-  };
+  }
 
   const pauseAudio = () => {
     setIsPlaying(false);
   };
 
   const resumeAudio = () => {
-    if (currentEpisode) {
-      setIsPlaying(true);
-    }
+    setIsPlaying(true);
   };
 
   const seekAudio = (time) => {
@@ -39,13 +39,9 @@ export function AudioProvider({ children }) {
       value={{
         currentEpisode,
         isPlaying,
-        currentTime,
-        duration,
-
         playEpisode,
         pauseAudio,
         resumeAudio,
-        seekAudio,
       }}
     >
       {children}
@@ -54,7 +50,9 @@ export function AudioProvider({ children }) {
 }
 
 /**
+ * Custom hook for consuming AudioContext
  *
+ * @param {Object} episode
  * @returns
  */
 export function useAudio() {

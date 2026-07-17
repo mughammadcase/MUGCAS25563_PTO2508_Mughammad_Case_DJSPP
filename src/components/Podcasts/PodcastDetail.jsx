@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ← add this
+import { useNavigate } from "react-router-dom";
 import styles from "./PodcastDetail.module.css";
 import { formatDate } from "../../utils/formatDate";
 import GenreTags from "../UI/GenreTags";
+import { useAudio } from "../../context/AudioContext";
 
 export default function PodcastDetail({ podcast, genres }) {
   const [selectedSeasonIndex, setSelectedSeasonIndex] = useState(0);
   const season = podcast.seasons[selectedSeasonIndex];
-  const navigate = useNavigate(); // ← hook for navigation
+  const navigate = useNavigate();
+  const { playEpisode } = useAudio();
 
   return (
     <div className={styles.container}>
@@ -45,7 +47,7 @@ export default function PodcastDetail({ podcast, genres }) {
                 <strong>
                   {podcast.seasons.reduce(
                     (acc, s) => acc + s.episodes.length,
-                    0
+                    0,
                   )}{" "}
                   Episodes
                 </strong>
@@ -85,7 +87,17 @@ export default function PodcastDetail({ podcast, genres }) {
 
         <div className={styles.episodeList}>
           {season.episodes.map((ep, index) => (
-            <div key={index} className={styles.episodeCard}>
+            <div
+              key={index}
+              className={styles.episodeCard}
+              onClick={() =>
+                playEpisode({
+                  title: ep.title,
+                  season: selectedSeasonIndex + 1,
+                  showTitle: podcast.title,
+                })
+              }
+            >
               <img className={styles.episodeCover} src={season.image} alt="" />
               <div className={styles.episodeInfo}>
                 <p className={styles.episodeTitle}>

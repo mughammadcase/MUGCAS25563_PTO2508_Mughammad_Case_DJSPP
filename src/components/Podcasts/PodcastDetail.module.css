@@ -162,6 +162,9 @@ strong {
 
   border: 1px solid var(--border-color);
   border-radius: 6px;
+
+  cursor: pointer;
+
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
