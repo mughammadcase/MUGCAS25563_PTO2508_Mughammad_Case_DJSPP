@@ -1,5 +1,5 @@
-// Accesses DOM nodes, bypass React virtual DOM
-import { useRef } from "react";
+// useRef accesses DOM nodes, bypass React virtual DOM
+import { useRef, useEffect } from "react";
 
 import { useAudio } from "../../context/AudioContext";
 import styles from "./AudioPlayer.module.css";
@@ -17,6 +17,16 @@ export default function AudioPlayer() {
     seekAudio,
   } = useAudio();
 
+  useEffect(() => {
+    if (!audioRef.current || !currentEpisode) return;
+
+    audioRef.current.src = currentEpisode.file;
+
+    if (isPlaying) {
+      audioRef.current.play();
+    }
+  }, [currentEpisode]);
+
   // Ensures that player doesnt show until episode is selected
   if (!currentEpisode) return null;
 
@@ -28,7 +38,19 @@ export default function AudioPlayer() {
         <h4>{currentEpisode.title}</h4>
       </div>
 
-      <button onClick={() => (isPlaying ? pauseAudio() : resumeAudio())}>
+      <button
+        onClick={() => {
+          if (!audioRef.current) return;
+
+          if (isPlaying) {
+            audioRef.current.pause();
+            pauseAudio();
+          } else {
+            audioRef.current.play();
+            resumeAudio();
+          }
+        }}
+      >
         {isPlaying ? "Pause" : "Play"}
       </button>
 
