@@ -87,6 +87,26 @@ export default function AudioPlayer() {
     };
   }, [pauseAudio, setCurrentTime, setDuration]);
 
+  /**
+   * Warn the user before leaving the page while audio is playing.
+   */
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (!isPlaying) return;
+
+      event.preventDefault();
+
+      // Required as browsers ignore custom warning messages
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isPlaying]);
+
   // Hide audio player until an episode is selected
   if (!currentEpisode) return null;
 
