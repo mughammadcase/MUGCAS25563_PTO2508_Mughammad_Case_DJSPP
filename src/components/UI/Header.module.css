@@ -1,14 +1,48 @@
 .appHeader {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   background: var(--surface-color);
   box-shadow: var(--shadow);
-
   transition: 0.25s;
 }
 
-.appHeader a {
+.logo {
   text-decoration: none;
   color: var(--text-color);
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding-bottom: 0.25rem;
+
+  transition:
+    color 0.25s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navLink:hover {
+  transform: translateY(-2px);
+  opacity: 0.8;
+}
+
+.activeLink {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  border-bottom: 2px solid var(--text-color);
+  padding-bottom: 0.25rem;
+
+  transition: 0.25s;
 }

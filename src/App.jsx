@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import ShowDetail from "./pages/ShowDetail";
 import { useTheme } from "./context/ThemeContext";
 import { AudioPlayer } from "./components";
+import Favourites from "./pages/Favourites";
 
 /**
  * Root component of the Podcast Explorer app.
@@ -27,7 +28,8 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path={`/show/:id`} element={<ShowDetail />} />
+          <Route path="/show/:id" element={<ShowDetail />} />
+          <Route path="/favourites" element={<Favourites />} />
         </Routes>
 
         <AudioPlayer />
