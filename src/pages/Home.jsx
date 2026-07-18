@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   SearchBar,
   SortSelect,
@@ -10,7 +11,7 @@ import {
 import styles from "./Home.module.css";
 import { genres } from "../data";
 import { PodcastContext } from "../context/PodcastContext";
-import { useContext } from "react";
+import RecommendedCarousel from "../components/UI/Carousel/RecommendedCarousel";
 
 /**
  * Home page of the Podcast Explorer app.
@@ -35,6 +36,7 @@ export default function Home() {
         <GenreFilter genres={genres} />
         <SortSelect />
       </section>
+      <RecommendedCarousel />
 
       {loading && <Loading message="Loading podcasts..." />}
       {error && (
