@@ -62,7 +62,7 @@
 
 @media (max-width: 425px) {
   .themeToggleContainer {
-    gap: 0.4rem;
+    gap: 0.25rem;
   }
 
   .themeIcon {

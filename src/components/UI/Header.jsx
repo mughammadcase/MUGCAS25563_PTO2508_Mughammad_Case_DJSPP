@@ -5,11 +5,11 @@ import ThemeToggle from "../Controls/ThemeToggle";
 export default function Header() {
   return (
     <header className={styles.appHeader}>
-      <h1>
+      <div className={styles.left}>
         <Link to="/" className={styles.logo}>
           🎙️ <span className={styles.logoText}>Podcast Explorer</span>
         </Link>
-      </h1>
+      </div>
 
       <nav className={styles.nav}>
         <NavLink
@@ -32,7 +32,9 @@ export default function Header() {
         </NavLink>
       </nav>
 
-      <ThemeToggle />
+      <div className={styles.right}>
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
