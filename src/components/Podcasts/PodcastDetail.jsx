@@ -90,14 +90,20 @@ export default function PodcastDetail({ podcast, genres }) {
           {season.episodes.map((ep, index) => {
             const favouritesEpisode = {
               id: `${podcast.id}-${selectedSeasonIndex + 1}-${ep.episode}`,
+
               showId: podcast.id,
               showTitle: podcast.title,
+              podcastDescription: podcast.description,
+              updated: podcast.updated,
+              genres: podcast.genres,
+
               season: selectedSeasonIndex + 1,
               episode: ep.episode,
               title: ep.title,
               description: ep.description,
-              image: season.image,
               file: ep.file,
+
+              image: season.image,
             };
 
             return (
