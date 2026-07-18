@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import { Link, NavLink } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../Controls/ThemeToggle";
 
 export default function Header() {
   return (

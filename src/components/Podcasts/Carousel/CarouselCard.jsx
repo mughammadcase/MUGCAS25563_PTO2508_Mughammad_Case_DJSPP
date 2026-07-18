@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GenreTags from "../GenreTags";
+import GenreTags from "../../UI/GenreTags";
 import styles from "./RecommendedCarousel.module.css";
 
 /**

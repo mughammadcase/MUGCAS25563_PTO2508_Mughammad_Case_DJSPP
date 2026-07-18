@@ -11,7 +11,7 @@ import {
 import styles from "./Home.module.css";
 import { genres } from "../data";
 import { PodcastContext } from "../context/PodcastContext";
-import RecommendedCarousel from "../components/UI/Carousel/RecommendedCarousel";
+import RecommendedCarousel from "../components/Podcasts/Carousel/RecommendedCarousel";
 
 /**
  * Home page of the Podcast Explorer app.
