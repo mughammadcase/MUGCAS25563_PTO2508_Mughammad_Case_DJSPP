@@ -4,6 +4,7 @@ import styles from "./PodcastDetail.module.css";
 import { formatDate } from "../../utils/formatDate";
 import GenreTags from "../UI/GenreTags";
 import { useAudio } from "../../context/AudioContext";
+import EpisodeFavouritesButton from "../Controls/EpisodeFavouritesButton";
 
 export default function PodcastDetail({ podcast, genres }) {
   const [selectedSeasonIndex, setSelectedSeasonIndex] = useState(0);
@@ -86,30 +87,53 @@ export default function PodcastDetail({ podcast, genres }) {
         </div>
 
         <div className={styles.episodeList}>
-          {season.episodes.map((ep, index) => (
-            <div
-              key={index}
-              className={styles.episodeCard}
-              onClick={() =>
-                playEpisode({
-                  title: ep.title,
-                  episode: ep.episode,
-                  file: ep.file,
-                  season: selectedSeasonIndex + 1,
-                  showTitle: podcast.title,
-                  image: season.image,
-                })
-              }
-            >
-              <img className={styles.episodeCover} src={season.image} alt="" />
-              <div className={styles.episodeInfo}>
-                <p className={styles.episodeTitle}>
-                  Episode {index + 1}: {ep.title}
-                </p>
-                <p className={styles.episodeDesc}>{ep.description}</p>
+          {season.episodes.map((ep, index) => {
+            const favouriteEpisode = {
+              id: `${podcast.id}-${selectedSeasonIndex + 1}-${ep.episode}`,
+              showId: podcast.id,
+              showTitle: podcast.title,
+              season: selectedSeasonIndex + 1,
+              episode: ep.episode,
+              title: ep.title,
+              description: ep.description,
+              image: season.image,
+              file: ep.file,
+            };
+
+            return (
+              <div
+                // gives React a stable key to avoid issues if episode order changes
+                key={favouriteEpisode.id}
+                className={styles.episodeCard}
+                onClick={() =>
+                  playEpisode({
+                    title: ep.title,
+                    episode: ep.episode,
+                    file: ep.file,
+                    season: selectedSeasonIndex + 1,
+                    showTitle: podcast.title,
+                    image: season.image,
+                  })
+                }
+              >
+                <EpisodeFavouritesButton episode={favouriteEpisode} />
+
+                <img
+                  className={styles.episodeCover}
+                  src={season.image}
+                  alt=""
+                />
+
+                <div className={styles.episodeInfo}>
+                  <p className={styles.episodeTitle}>
+                    Episode {index + 1}: {ep.title}
+                  </p>
+
+                  <p className={styles.episodeDesc}>{ep.description}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
