@@ -1,3 +1,7 @@
+.main {
+  padding-bottom: 90px;
+}
+
 .controls {
   display: flex;
   flex-direction: column;
