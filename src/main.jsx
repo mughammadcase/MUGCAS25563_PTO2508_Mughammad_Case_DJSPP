@@ -7,6 +7,9 @@ import { PodcastProvider } from "./context/PodcastContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { AudioProvider } from "./context/AudioContext";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
