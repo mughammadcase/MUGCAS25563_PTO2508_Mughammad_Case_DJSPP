@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FavouriteContext } from "../../context/FavouritesContext";
+import { FavouritesContext } from "../../context/FavouritesContext";
 
 /**
  * Button for adding an episode as a favourite
@@ -9,20 +9,20 @@ import { FavouriteContext } from "../../context/FavouritesContext";
  * @returns {JSX.Element}
  */
 export default function EpisodeFavouritesButton({ episode }) {
-  const { toggleFavourite, isFavourite } = useContext(FavouriteContext);
+  const { toggleFavourites, isFavourites } = useContext(FavouritesContext);
 
-  const favourite = isFavourite(episode.id);
+  const favourites = isFavourites(episode.id);
 
   function handleClick(e) {
     // Prevents the episode card click (play audio)
     e.stopPropagation();
 
-    toggleFavourite(episode);
+    toggleFavourites(episode);
   }
 
   return (
-    <button onClick={handleClick} aria-label="Toggle favourite">
-      {favourite ? "❤️" : "🤍"}
+    <button onClick={handleClick} aria-label="Toggle favourites">
+      {favourites ? "❤️" : "🤍"}
     </button>
   );
 }

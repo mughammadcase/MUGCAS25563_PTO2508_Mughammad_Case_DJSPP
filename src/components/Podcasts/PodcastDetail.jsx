@@ -88,7 +88,7 @@ export default function PodcastDetail({ podcast, genres }) {
 
         <div className={styles.episodeList}>
           {season.episodes.map((ep, index) => {
-            const favouriteEpisode = {
+            const favouritesEpisode = {
               id: `${podcast.id}-${selectedSeasonIndex + 1}-${ep.episode}`,
               showId: podcast.id,
               showTitle: podcast.title,
@@ -103,7 +103,7 @@ export default function PodcastDetail({ podcast, genres }) {
             return (
               <div
                 // gives React a stable key to avoid issues if episode order changes
-                key={favouriteEpisode.id}
+                key={favouritesEpisode.id}
                 className={styles.episodeCard}
                 onClick={() =>
                   playEpisode({
@@ -116,7 +116,7 @@ export default function PodcastDetail({ podcast, genres }) {
                   })
                 }
               >
-                <EpisodeFavouritesButton episode={favouriteEpisode} />
+                <EpisodeFavouritesButton episode={favouritesEpisode} />
 
                 <img
                   className={styles.episodeCover}

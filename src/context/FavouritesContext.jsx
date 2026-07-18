@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { getFavourites, saveFavourites } from "../utils/favouritesStorage";
 
 // Context for managing favourited podcast episodes
-export const FavouriteContext = createContext();
+export const FavouritesContext = createContext();
 
 /**
  * Provides global favourites state and helper functions
@@ -11,7 +11,7 @@ export const FavouriteContext = createContext();
  * @param {React.ReactNode} props.children
  * @returns {JSX.Element}
  */
-export function FavouriteProvider({ children }) {
+export function FavouritesProvider({ children }) {
   // Lazy initialization to read once during init & no extra render with empty array first
   const [favourites, setFavourites] = useState(() => getFavourites());
 
@@ -28,7 +28,7 @@ export function FavouriteProvider({ children }) {
    * @param {string} id
    * @returns {boolean}
    */
-  function isFavourite(id) {
+  function isFavourites(id) {
     return favourites.some((fav) => fav.id === id);
   }
 
@@ -37,8 +37,8 @@ export function FavouriteProvider({ children }) {
    *
    * @param {Object} episode
    */
-  function addFavourite(episode) {
-    if (isFavourite(episode.id)) return;
+  function addFavourites(episode) {
+    if (isFavourites(episode.id)) return;
 
     setFavourites((prev) => [...prev, episode]);
   }
@@ -48,7 +48,7 @@ export function FavouriteProvider({ children }) {
    *
    * @param {string} id
    */
-  function removeFavourite(id) {
+  function removeFavourites(id) {
     setFavourites((prev) => prev.filter((episode) => episode.id !== id));
   }
 
@@ -57,25 +57,25 @@ export function FavouriteProvider({ children }) {
    *
    * @param {Object} episode
    */
-  function toggleFavourite(episode) {
-    if (isFavourite(episode.id)) {
-      removeFavourite(episode.id);
+  function toggleFavourites(episode) {
+    if (isFavourites(episode.id)) {
+      removeFavourites(episode.id);
     } else {
-      addFavourite(episode);
+      addFavourites(episode);
     }
   }
 
   return (
-    <FavouriteContext.Provider
+    <FavouritesContext.Provider
       value={{
         favourites,
-        addFavourite,
-        removeFavourite,
-        toggleFavourite,
-        isFavourite,
+        addFavourites,
+        removeFavourites,
+        toggleFavourites,
+        isFavourites,
       }}
     >
       {children}
-    </FavouriteContext.Provider>
+    </FavouritesContext.Provider>
   );
 }
