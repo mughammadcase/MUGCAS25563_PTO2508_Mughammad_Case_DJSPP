@@ -17,10 +17,25 @@
   transition: transform 0.2s ease;
 }
 
-.favouriteButton:hover {
-  transform: scale(1.1);
-}
-
 .icon {
   font-size: 1.2rem;
+  color: var(--text-secondary);
+
+  transition:
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.activeIcon {
+  font-size: 1.2rem;
+  color: #ef476f;
+
+  transition:
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.favouriteButton:hover .icon,
+.favouriteButton:hover .activeIcon {
+  transform: scale(1.1);
 }

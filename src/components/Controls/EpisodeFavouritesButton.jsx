@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FavouritesContext } from "../../context/FavouritesContext";
 import styles from "./EpisodeFavouritesButton.module.css";
 
@@ -27,7 +28,11 @@ export default function EpisodeFavouritesButton({ episode }) {
       onClick={handleClick}
       aria-label="Toggle favourites"
     >
-      {favourites ? "❤️" : "🤍"}
+      {favourites ? (
+        <FaHeart className={styles.activeIcon} />
+      ) : (
+        <FaRegHeart className={styles.icon} />
+      )}
     </button>
   );
 }
