@@ -1,7 +1,7 @@
 .appHeader {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.25rem 1rem;
   background: var(--surface-color);
   box-shadow: var(--shadow);
   transition: 0.25s;
@@ -10,6 +10,10 @@
 .logo {
   text-decoration: none;
   color: var(--text-color);
+}
+
+.logoText {
+  display: inline;
 }
 
 .nav {
@@ -45,4 +49,10 @@
   padding-bottom: 0.25rem;
 
   transition: 0.25s;
+}
+
+@media (max-width: 768px) {
+  .logoText {
+    display: none;
+  }
 }
