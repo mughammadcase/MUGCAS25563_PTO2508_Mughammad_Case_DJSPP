@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { FavouritesContext } from "../../context/FavouritesContext";
+import styles from "./EpisodeFavouritesButton.module.css";
 
 /**
  * Button for adding an episode as a favourite
@@ -14,14 +15,18 @@ export default function EpisodeFavouritesButton({ episode }) {
   const favourites = isFavourites(episode.id);
 
   function handleClick(e) {
-    // Prevents the episode card click (play audio)
+    // Prevents the episode card click (to play audio)
     e.stopPropagation();
 
     toggleFavourites(episode);
   }
 
   return (
-    <button onClick={handleClick} aria-label="Toggle favourites">
+    <button
+      className={styles.favouriteButton}
+      onClick={handleClick}
+      aria-label="Toggle favourites"
+    >
       {favourites ? "❤️" : "🤍"}
     </button>
   );

@@ -156,6 +156,8 @@ strong {
 }
 
 .episodeCard {
+  position: relative;
+
   display: flex;
   background: var(--surface-color);
   padding: 1rem;
@@ -178,7 +180,9 @@ strong {
   border-color: #d1d5db;
 }
 .episodeInfo {
+  flex: 1;
   margin-left: 10px;
+  padding-right: 3rem;
 }
 
 .episodeTitle {
@@ -193,7 +197,7 @@ strong {
   font-size: 0.875rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 425px) {
   .container {
     padding: 1rem;
   }
