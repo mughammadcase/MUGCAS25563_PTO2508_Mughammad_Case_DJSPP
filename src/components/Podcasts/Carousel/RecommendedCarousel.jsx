@@ -54,12 +54,9 @@ export default function RecommendedCarousel() {
       <h2>Recommended Shows</h2>
 
       <Slider {...settings}>
-        {[...allPodcasts]
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 12)
-          .map((podcast) => (
-            <CarouselCard key={podcast.id} podcast={podcast} />
-          ))}
+        {allPodcasts.slice(0, 12).map((podcast) => (
+          <CarouselCard key={podcast.id} podcast={podcast} />
+        ))}
       </Slider>
     </section>
   );
