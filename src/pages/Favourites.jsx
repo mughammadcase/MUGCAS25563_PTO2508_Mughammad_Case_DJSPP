@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FavouritesContext } from "../context/FavouritesContext";
 import { useAudio } from "../context/AudioContext";
 import EpisodeFavouritesButton from "../components/Controls/EpisodeFavouritesButton";
@@ -7,7 +7,14 @@ import styles from "./Favourites.module.css";
 
 /**
  * Displays all favourited podcast episodes.
- * Episodes are grouped by their parent show title
+ *
+ * Features:
+ * - Groups episodes by their parent show
+ * - Allows sorting by:
+ *   - Newest added
+ *   - Oldest added
+ *   - Episode title A-Z
+ *   - Episode title Z-A
  *
  * @returns {JSX.Element}
  */
@@ -15,11 +22,12 @@ export default function Favourites() {
   const { favourites } = useContext(FavouritesContext);
   const { playEpisode } = useAudio();
 
+  const [sort, setSort] = useState("newest");
+
   /**
-   * Groups favourited episodes by their show title.
+   * Groups favourited episodes by show title.
    *
-   * @param {Array} favourites - The array of favourited episodes
-   * @returns {Object} - An object with show titles as keys and arrays of episodes as values
+   * @type {Record<string, Array>}
    */
   const grouped = favourites.reduce((acc, episode) => {
     if (!acc[episode.showTitle]) {
@@ -48,45 +56,86 @@ export default function Favourites() {
     <main className={styles.container}>
       <h1>Favourite Episodes</h1>
 
-      {Object.entries(grouped).map(([showTitle, episodes]) => (
-        <section key={showTitle} className={styles.showGroup}>
-          <h2 className={styles.showHeading}>{showTitle}</h2>
+      <select
+        className={styles.sortSelect}
+        value={sort}
+        onChange={(e) => setSort(e.target.value)}
+      >
+        <option value="newest">Newest Added</option>
+        <option value="oldest">Oldest Added</option>
+        <option value="az">Episode Title A-Z</option>
+        <option value="za">Episode Title Z-A</option>
+      </select>
 
-          <div className={styles.episodeList}>
-            {episodes.map((episode) => (
-              <div
-                key={episode.id}
-                className={styles.episodeCard}
-                onClick={() => playEpisode(episode)}
-              >
-                <img
-                  src={episode.image}
-                  alt={episode.showTitle}
-                  className={styles.cover}
-                />
+      {Object.entries(grouped).map(([showTitle, episodes]) => {
+        /**
+         * Creates a sorted copy of the show's episodes
+         */
+        const sortedEpisodes = [...episodes];
 
-                <div className={styles.info}>
-                  <h3>{episode.title}</h3>
+        switch (sort) {
+          case "az":
+            sortedEpisodes.sort((a, b) => a.title.localeCompare(b.title));
+            break;
 
-                  <p>
-                    Season {episode.season} • Episode {episode.episode}
-                  </p>
+          case "za":
+            sortedEpisodes.sort((a, b) => b.title.localeCompare(a.title));
+            break;
 
-                  <p className={styles.description}>
-                    {episode.podcastDescription}
-                  </p>
+          case "oldest":
+            sortedEpisodes.sort(
+              (a, b) => new Date(a.addedAt) - new Date(b.addedAt),
+            );
+            break;
 
-                  <p className={styles.updated}>
-                    Added {formatDate(episode.addedAt)}
-                  </p>
+          case "newest":
+          default:
+            sortedEpisodes.sort(
+              (a, b) => new Date(b.addedAt) - new Date(a.addedAt),
+            );
+            break;
+        }
+
+        return (
+          <section key={showTitle} className={styles.showGroup}>
+            <h2 className={styles.showHeading}>{showTitle}</h2>
+
+            <div className={styles.episodeList}>
+              {sortedEpisodes.map((episode) => (
+                <div
+                  key={episode.id}
+                  className={styles.episodeCard}
+                  onClick={() => playEpisode(episode)}
+                >
+                  <img
+                    src={episode.image}
+                    alt={episode.showTitle}
+                    className={styles.cover}
+                  />
+
+                  <div className={styles.info}>
+                    <h3>{episode.title}</h3>
+
+                    <p>
+                      Season {episode.season} • Episode {episode.episode}
+                    </p>
+
+                    <p className={styles.description}>
+                      {episode.podcastDescription}
+                    </p>
+
+                    <p className={styles.updated}>
+                      Added: {formatDate(episode.addedAt)}
+                    </p>
+                  </div>
+
+                  <EpisodeFavouritesButton episode={episode} />
                 </div>
-
-                <EpisodeFavouritesButton episode={episode} />
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </main>
   );
 }

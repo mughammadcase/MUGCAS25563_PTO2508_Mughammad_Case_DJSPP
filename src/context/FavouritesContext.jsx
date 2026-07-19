@@ -40,7 +40,13 @@ export function FavouritesProvider({ children }) {
   function addFavourites(episode) {
     if (isFavourites(episode.id)) return;
 
-    setFavourites((prev) => [...prev, episode]);
+    setFavourites((prev) => [
+      ...prev,
+      {
+        ...episode,
+        addedAt: new Date().toISOString(),
+      },
+    ]);
   }
 
   /**
