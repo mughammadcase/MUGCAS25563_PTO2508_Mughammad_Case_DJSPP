@@ -93,6 +93,9 @@ export default function PodcastDetail({ podcast, genres }) {
 
               showId: podcast.id,
               showTitle: podcast.title,
+
+              addedAt: new Date().toISOString(),
+
               podcastDescription: podcast.description,
               updated: podcast.updated,
               genres: podcast.genres,

@@ -48,7 +48,7 @@ export default function Favourites() {
               <p className={styles.description}>{episode.podcastDescription}</p>
 
               <p className={styles.updated}>
-                Updated {formatDate(episode.updated)}
+                Added {formatDate(episode.addedAt)}
               </p>
 
               <small>
