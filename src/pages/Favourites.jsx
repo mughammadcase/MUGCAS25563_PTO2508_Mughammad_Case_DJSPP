@@ -10,9 +10,12 @@ import selectStyles from "../components/Filters/Select.module.css";
  * Displays all favourited podcast episodes.
  *
  * Features:
- * - Groups episodes by podcast.
- * - Sorts podcast groups alphabetically.
- * - Sorts episodes within each group.
+ * - Filter favourites by podcast.
+ * - Sort episodes by:
+ *   - Newest added
+ *   - Oldest added
+ *   - Episode title A-Z
+ *   - Episode title Z-A
  *
  * @returns {JSX.Element}
  */
@@ -20,9 +23,21 @@ export default function Favourites() {
   const { favourites } = useContext(FavouritesContext);
   const { playEpisode } = useAudio();
 
-  const [groupSort, setGroupSort] = useState("az");
+  const [selectedPodcast, setSelectedPodcast] = useState("all");
   const [episodeSort, setEpisodeSort] = useState("newest");
 
+  /**
+   * Builds a sorted list of unique podcast titles
+   */
+  const podcastTitles = useMemo(() => {
+    return [...new Set(favourites.map((episode) => episode.showTitle))].sort(
+      (a, b) => a.localeCompare(b),
+    );
+  }, [favourites]);
+
+  /**
+   * Group favourites by podcast
+   */
   const groupedEntries = useMemo(() => {
     const grouped = favourites.reduce((acc, episode) => {
       if (!acc[episode.showTitle]) {
@@ -30,17 +45,18 @@ export default function Favourites() {
       }
 
       acc[episode.showTitle].push(episode);
+
       return acc;
     }, {});
 
-    const entries = Object.entries(grouped);
+    let entries = Object.entries(grouped);
 
-    entries.sort(([a], [b]) =>
-      groupSort === "az" ? a.localeCompare(b) : b.localeCompare(a),
-    );
+    if (selectedPodcast !== "all") {
+      entries = entries.filter(([title]) => title === selectedPodcast);
+    }
 
     return entries;
-  }, [favourites, groupSort]);
+  }, [favourites, selectedPodcast]);
 
   if (favourites.length === 0) {
     return (
@@ -63,24 +79,29 @@ export default function Favourites() {
 
       <div className={styles.sortControls}>
         <div className={styles.sortContainer}>
-          <label htmlFor="group-sort" className={styles.sortLabel}>
-            Podcast order
+          <label htmlFor="podcast-filter" className={styles.sortLabel}>
+            Podcast
           </label>
 
           <select
-            id="group-sort"
+            id="podcast-filter"
             className={selectStyles.select}
-            value={groupSort}
-            onChange={(e) => setGroupSort(e.target.value)}
+            value={selectedPodcast}
+            onChange={(e) => setSelectedPodcast(e.target.value)}
           >
-            <option value="az">A-Z</option>
-            <option value="za">Z-A</option>
+            <option value="all">All Podcasts</option>
+
+            {podcastTitles.map((title) => (
+              <option key={title} value={title}>
+                {title}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className={styles.sortContainer}>
           <label htmlFor="episode-sort" className={styles.sortLabel}>
-            Episode order
+            Episode Order
           </label>
 
           <select
@@ -91,14 +112,14 @@ export default function Favourites() {
           >
             <option value="newest">Newest Added</option>
             <option value="oldest">Oldest Added</option>
-            <option value="title-az">Title A-Z</option>
-            <option value="title-za">Title Z-A</option>
+            <option value="title-az">Episode Title A-Z</option>
+            <option value="title-za">Episode Title Z-A</option>
           </select>
         </div>
       </div>
 
       {groupedEntries.map(([showTitle, episodes]) => {
-        // Sort episodes within each podcast group based on the selected episodeSort option
+        // Sort episodes based on the selected sort option
         const sortedEpisodes = [...episodes];
 
         switch (episodeSort) {

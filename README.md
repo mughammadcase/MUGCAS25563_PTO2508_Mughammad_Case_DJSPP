@@ -60,13 +60,14 @@ This project was built as the final portfolio piece for the CodeSpace DJS React 
   - Season
   - Episode
   - Date favourited
-- Sort podcast groups alphabetically
+- Filter favourites by podcast using a dedicated dropdown
+- Use separate controls for episode ordering and podcast selection
 - Sort episodes by:
   - Episode title A–Z
   - Episode title Z–A
   - Newest Added
   - Oldest Added
-- Use separate sort controls for podcast groups and episode lists for clearer browsing
+- Show a friendly empty state when no favourites have been saved yet
 
 ---
 
