@@ -101,6 +101,17 @@
   color: var(--text-secondary);
 }
 
+.showGroup {
+  margin-bottom: 2.5rem;
+}
+
+.showHeading {
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
 @media (max-width: 768px) {
   .episodeCard {
     align-items: flex-start;
