@@ -5,8 +5,26 @@
 }
 
 .container h1 {
+  margin-bottom: 1rem;
+  color: var(--);
+}
+
+.container h3 {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 2rem;
+}
+
+.sortLabel {
   color: var(--text-color);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .episodeList {
@@ -113,6 +131,11 @@
 }
 
 @media (max-width: 768px) {
+  .sortContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .episodeCard {
     align-items: flex-start;
   }

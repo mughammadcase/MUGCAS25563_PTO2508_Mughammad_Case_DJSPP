@@ -4,6 +4,7 @@ import { useAudio } from "../context/AudioContext";
 import EpisodeFavouritesButton from "../components/Controls/EpisodeFavouritesButton";
 import { formatDate } from "../utils/formatDate";
 import styles from "./Favourites.module.css";
+import selectStyles from "../components/Filters/Select.module.css";
 
 /**
  * Displays all favourited podcast episodes.
@@ -55,17 +56,25 @@ export default function Favourites() {
   return (
     <main className={styles.container}>
       <h1>Favourite Episodes</h1>
+      <h3 className={styles.subtitle}>Your saved episodes from all shows</h3>
 
-      <select
-        className={styles.sortSelect}
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
-      >
-        <option value="newest">Newest Added</option>
-        <option value="oldest">Oldest Added</option>
-        <option value="az">Episode Title A-Z</option>
-        <option value="za">Episode Title Z-A</option>
-      </select>
+      <div className={styles.sortContainer}>
+        <label htmlFor="sort-favourites" className={styles.sortLabel}>
+          Sort by:
+        </label>
+
+        <select
+          id="sort-favourites"
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className={selectStyles.select}
+        >
+          <option value="newest">Newest Added</option>
+          <option value="oldest">Oldest Added</option>
+          <option value="az">Episode Title A-Z</option>
+          <option value="za">Episode Title Z-A</option>
+        </select>
+      </div>
 
       {Object.entries(grouped).map(([showTitle, episodes]) => {
         /**

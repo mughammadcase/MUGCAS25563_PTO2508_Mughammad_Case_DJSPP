@@ -1,0 +1,25 @@
+/* Select styles shared across SortSelect, GenreFilter, andFavourites select */
+
+.select {
+  background: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+
+  transition: 0.25s;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--text-color);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.15);
+}
+
+@media (max-width: 425px) {
+  .select {
+    width: 100%;
+  }
+}

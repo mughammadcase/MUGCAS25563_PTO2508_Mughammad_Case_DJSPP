@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { SORT_OPTIONS, PodcastContext } from "../../context/PodcastContext";
-import styles from "./SortSelect.module.css";
+import selectStyles from "./Select.module.css";
 
 /**
  * Dropdown for choosing sort order.
@@ -10,7 +10,7 @@ export default function SortSelect() {
 
   return (
     <select
-      className={styles.select}
+      className={selectStyles.select}
       value={sortKey}
       onChange={(e) => setSortKey(e.target.value)}
     >
